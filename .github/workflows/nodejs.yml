@@ -15,7 +15,7 @@ jobs:
         CLOUDSDK_CORE_PROJECT: ao00-254402
       with:
         args: builds submit --tag gcr.io/ao00-254402/nodeapp
-     - uses: mapfap/gcloud/cli@master
+    - uses: mapfap/gcloud/cli@master
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
         CLOUDSDK_CORE_PROJECT: ao00-254402
