@@ -1,39 +1,23 @@
-name: Node CI
-
+name: GCP Cloud Run
 on: [push]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x]
-
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      name: Use Node.js ${{ matrix.node-version }}
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm install
-        npm run build --if-present
-        npm test
-      env:
-        CI: true
-    - uses: actions/gcloud/auth@master
+    - uses: mapfap/gcloud/auth@master
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
         CLOUDSDK_CORE_PROJECT: ao00-254402
-    - uses: actions/gcloud/cli@master
+    - uses: mapfap/gcloud/cli@master
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
         CLOUDSDK_CORE_PROJECT: ao00-254402
       with:
-        args:
-         - components install beta
-         - builds submit --tag gcr.io/ao00-254402/nodeapp
-         - beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed
+        args: builds submit --tag gcr.io/ao00-254402/nodeapp
+     - uses: mapfap/gcloud/cli@master
+      env:
+        GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+        CLOUDSDK_CORE_PROJECT: ao00-254402
+      with:
+        args: beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed      
