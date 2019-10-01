@@ -28,6 +28,8 @@ jobs:
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
     - uses: actions/gcloud/cli@latest
-      args: builds submit --tag gcr.io/ao00-254402/nodeapp
+      with:
+        args: builds submit --tag gcr.io/ao00-254402/nodeapp
     - uses: actions/gcloud/cli@latest
-      args: beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed
+      with:
+        args: beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed
