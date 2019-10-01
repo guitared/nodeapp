@@ -13,8 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - uses: actions/setup-node@v1
+      name: Use Node.js ${{ matrix.node-version }}
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install, build, and test
@@ -24,3 +24,13 @@ jobs:
         npm test
       env:
         CI: true
+    - uses: actions/gcloud/auth@dc2b6c3bc6efde1869a9d4c21fcad5c125d19b81
+      env:
+        GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+    - uses: actions/gcloud/cli@dc2b6c3bc6efde1869a9d4c21fcad5c125d19b81
+      run: |
+        gcloud builds submit --tag gcr.io/ao00-254402/nodeapp
+        gcloud beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed
+        
+        
+        
