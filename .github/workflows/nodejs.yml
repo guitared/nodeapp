@@ -24,13 +24,10 @@ jobs:
         npm test
       env:
         CI: true
-    - uses: actions/gcloud/auth@dc2b6c3bc6efde1869a9d4c21fcad5c125d19b81
+    - uses: actions/gcloud/auth@latest
       env:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
-    - uses: actions/gcloud/cli@dc2b6c3bc6efde1869a9d4c21fcad5c125d19b81
-      run: |
-        gcloud builds submit --tag gcr.io/ao00-254402/nodeapp
-        gcloud beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed
-        
-        
-        
+    - uses: actions/gcloud/cli@latest
+      args: builds submit --tag gcr.io/ao00-254402/nodeapp
+    - uses: actions/gcloud/cli@latest
+      args: beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed
