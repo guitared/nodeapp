@@ -20,4 +20,4 @@ jobs:
         GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
         CLOUDSDK_CORE_PROJECT: ao00-254402
       with:
-        args: beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed      
+        args: beta run deploy --image gcr.io/ao00-254402/nodeapp --platform managed --region asia-northeast1     
