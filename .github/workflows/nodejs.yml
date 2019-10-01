@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: mapfap/gcloud/auth@master
     - uses: mapfap/gcloud/cli@master
       with:
         args: builds submit --tag gcr.io/$CLOUDSDK_CORE_PROJECT/$APP_NAME
