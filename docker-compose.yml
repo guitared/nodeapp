@@ -3,15 +3,19 @@ services:
   app:
     container_name: huddle
     environment:
-      - MONGO=127.0.0.1:27107
-    restart: always
+    - MONGO="mongodb://mongo:27017"
     build: .
     ports:
-      - '80:8080'
-    links:
-      - mongo
+    - "80:8080"
+    depends_on:
+    - mongo
+
   mongo:
     container_name: mongo
     image: mongo
     ports:
-    - '27017:27017'
+    - "27017:27017"
+    volumes:
+    - data-volume:/data/db
+volumes:
+  data-volume:
