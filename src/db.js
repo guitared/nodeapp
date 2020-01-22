@@ -56,7 +56,7 @@ const updateRoom = async (id, room) => {
 }
 
 const assertDBConnection = () => {
-  if (!isConnected) throw new Error('DB is net connected')
+  if (!isConnected) throw new Error('DB is not connected')
 }
 
 module.exports = { getRooms, createRoom, updateRoom }
