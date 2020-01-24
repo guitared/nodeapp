@@ -4,9 +4,13 @@ require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 8080
 const db = require('./db')
+const mqttHandler = require('./mqtt_handler')
 
 app.use(express.json())
 app.use(cors())
+
+var mqttClient =  new mqttHandler()
+mqttClient.connect()
 
 app.get('/', (req, res) => {
   res.json({up: true})

@@ -3,7 +3,11 @@ services:
   app:
     container_name: huddle
     environment:
-    - MONGO="mongodb://mongo:27017"
+    - MONGO=mongodb://mongo:27017
+    - MQTT_HOST=mqtt://farmer.cloudmqtt.com
+    - MQTT_USER=test1
+    - MQTT_PASS=test1
+    - MQTT_PORT=13962
     build: .
     ports:
     - "80:8080"
@@ -13,9 +17,12 @@ services:
   mongo:
     container_name: mongo
     image: mongo
+    environment:
+    - MONGO_INITDB_DATABASE=test
     ports:
     - "27017:27017"
     volumes:
+    - ./mongo-init.js:/docker-entrypoint-initdb.d/mongi-init.js:ro
     - data-volume:/data/db
 volumes:
   data-volume:

@@ -34,7 +34,7 @@ const createDevicePromise = (devices) => {
 const updateDevicePromise = (id, device) => {
   return new Promise((resolve, reject) => {
     client.db("test").collection("devices")
-    .updateOne({ id : id }, { $set: device }, function(err, docs) {
+    .updateOne({ id : id }, { $set: device }, { upsert: true }, function(err, docs) {
       err ? reject(err) : resolve(docs)
     })
   })
