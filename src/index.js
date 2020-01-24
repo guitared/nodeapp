@@ -12,39 +12,42 @@ app.get('/', (req, res) => {
   res.json({up: true})
 })
 
-app.get('/api/rooms', async (req, res) => {
+app.get('/api/devices', async (req, res) => {
   try {
-    const rooms = await db.getRooms()
-    res.json(rooms.map(r => { 
-      return {id: r.id, isOccupied: r.isOccupied}
+    const devices = await db.getDevices()
+    res.json(devices.map(r => { 
+      return {id: r.id, building: r.building, floor: r.floor, room: r.room, lastOnline: r.lastOnline}
     }))
   } catch (err) {
-    console.log('GET /api/rooms', err)
+    console.log('GET /api/devices', err)
     res.status(500).json(err.message)
   }
 })
 
-app.post('/api/rooms/', async (req, res) => {
+app.post('/api/devices/', async (req, res) => {
   try {
-    await db.createRoom({
+    await db.createDevice({
       id: req.body.id,
-      isOccupied: req.body.isOccupied
+      building: req.body.building,
+      floor: req.body.floor,
+      room: req.body.room,
+      lastOnline: req.body.lastOnline
     })
     res.send(201)
   } catch (err) {
-    console.log('POST /api/rooms', err)
+    console.log('POST /api/devices', err)
     res.status(500).json(err.message)
   }
 })
 
-app.put('/api/rooms/:id', async (req, res) => {
+app.put('/api/devices/:id', async (req, res) => {
   try {
-    await db.updateRoom(req.params.id, {
-      isOccupied: req.body.isOccupied
+    await db.updateDevice(req.params.id, {
+      lastOnline: req.body.lastOnline
     })
     res.send(200)
   } catch (err) {
-    console.log('PUT /api/rooms', err)
+    console.log('PUT /api/devices', err)
     res.status(500).json(err.message)
   }
 })

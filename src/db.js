@@ -15,51 +15,51 @@ client.connect(err => {
   console.log(`[sys] Connected to MongoDB`)
 })
 
-const getRoomsPromise = () => {
+const getDevicesPromise = () => {
   return new Promise((resolve, reject) => {
-    client.db("test").collection("rooms").find({}).toArray(function(err, docs) {
+    client.db("test").collection("devices").find({}).toArray(function(err, docs) {
       err ? reject(err) : resolve(docs)
     })
   })
 }
 
-const createRoomPromise = (room) => {
+const createDevicePromise = (devices) => {
   return new Promise((resolve, reject) => {
-    client.db("test").collection("rooms").insertMany([room], function(err, docs) {
+    client.db("test").collection("devices").insertMany([devices], function(err, docs) {
       err ? reject(err) : resolve(docs)
     })
   })
 }
 
-const updateRoomPromise = (id, room) => {
+const updateDevicePromise = (id, device) => {
   return new Promise((resolve, reject) => {
-    client.db("test").collection("rooms")
-    .updateOne({ id : id }, { $set: room }, function(err, docs) {
+    client.db("test").collection("devices")
+    .updateOne({ id : id }, { $set: device }, function(err, docs) {
       err ? reject(err) : resolve(docs)
     })
   })
 }
 
-const getRooms = async () => {
+const getDevices = async () => {
   assertDBConnection()
-  return await getRoomsPromise()
+  return await getDevicesPromise()
 }
 
-const createRoom = async (room) => {
+const createDevice = async (room) => {
   assertDBConnection()
-  await createRoomPromise(room)
+  await createDevicePromise(room)
 }
 
-const updateRoom = async (id, room) => {
+const updateDevice = async (id, room) => {
   assertDBConnection()
-  await updateRoomPromise(id, room)
+  await updateDevicePromise(id, room)
 }
 
 const assertDBConnection = () => {
   if (!isConnected) throw new Error('DB is not connected')
 }
 
-module.exports = { getRooms, createRoom, updateRoom }
+module.exports = { getDevices, createDevice, updateDevice }
 
 
 
